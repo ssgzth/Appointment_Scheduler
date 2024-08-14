@@ -1,0 +1,152 @@
+﻿@model ReceptionistIndexViewModel
+
+@{
+    ViewData["Title"] = "Receptionist Home Page";
+    ViewBag.Date = DateTime.Today;
+}
+
+
+<div class="container">
+    <div>
+        <h3>@ViewBag.Date</h3>
+    </div>
+    <div class="row">
+
+       
+
+        @* Scheduled *@
+
+        <div class="col-md-4">
+            <h3>Scheduled</h3>
+            @foreach(var scheduledAppointment in Model.AppointmentList.Reverse())
+            {
+                if(scheduledAppointment.Status == Status.Scheduled && scheduledAppointment.StartTime ==ViewBag.Date)
+                 {
+            
+                 <div class="card mb-3 h-15 ">
+                    <div class="card-body">
+                        <div class=" card-title text-center m-1">
+                            <h3>
+                                @scheduledAppointment.Service
+                            </h3>
+                        </div>
+                        <div class="card-text text-center">
+                            @scheduledAppointment.StartTime
+                        </div>
+
+                        <div class="card-text text-center">
+                            @scheduledAppointment.EndTime
+                        </div>
+
+                        <div class="card-text text-center">
+                            @scheduledAppointment.Status
+                        </div>
+                      <div class=" text-center m-1">
+                            <a asp-action="changeStatus" asp-controller="Receptionist" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-arrow-right"></a>
+
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-pen"> <span class="ms-1"></span> </a>
+                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@scheduledAppointment.Id" type="button" class="btn btn-danger bi bi-trash">
+                            <span class="ms-1"></span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            
+       
+
+                 }
+
+                }
+         </div>
+
+         @* IN_WaitingRoom *@
+
+        <div class="col-md-4">
+            <h3>In WaitingRoom</h3>
+            @foreach (var scheduledAppointment in Model.AppointmentList.Reverse())
+            {
+                if (scheduledAppointment.Status == Status.WaitingRoom)
+                {
+                    <div class="card mb-3 h-15 ">
+                        <div class="card-body">
+                            <div class=" card-title text-center m-1">
+                                <h3>
+                                    @scheduledAppointment.Service
+                                </h3>
+                            </div>
+                            <div class="card-text text-center">
+                                @scheduledAppointment.StartTime
+                            </div>
+
+                            <div class="card-text text-center">
+                                @scheduledAppointment.EndTime
+                            </div>
+
+                            <div class="card-text text-center">
+                                @scheduledAppointment.Status
+                            </div>
+
+                            <div class=" text-center m-1">
+                                <a asp-action="changeStatus" asp-controller="Receptionist" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-arrow-right"></a>
+
+                                <a asp-controller="Home" asp-action="Edit" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-pen"> <span class="ms-1"></span> </a>
+                                <a asp-controller="Home" asp-action="Delete" asp-route-id="@scheduledAppointment.Id" type="button" class="btn btn-danger bi bi-trash">
+                                    <span class="ms-1"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            }
+        </div>
+
+        @* In_Doctors_Room *@
+
+        <div class="col-md-4">
+            <h3>In Doctors Room</h3>
+            @foreach (var scheduledAppointment in Model.AppointmentList.Reverse())
+            {
+                if (scheduledAppointment.Status == Status.DoctorsRoom)
+                {
+                    <div class="card mb-3 h-15 ">
+                        <div class="card-body">
+                            <div class=" card-title text-center m-1">
+                                <h3>
+                                    @scheduledAppointment.Service
+                                </h3>
+                            </div>
+                            <div class="card-text text-center">
+                                @scheduledAppointment.StartTime
+                            </div>
+
+                            <div class="card-text text-center">
+                                @scheduledAppointment.EndTime
+                            </div>
+
+                            <div class="card-text text-center">
+                                @scheduledAppointment.Status
+                            </div>
+
+                            <div class=" text-center m-1">
+                                <a asp-action="changeStatus" asp-controller="Receptionist" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-arrow-right"></a>
+
+                                <a asp-controller="Home" asp-action="Edit" asp-route-id="@scheduledAppointment.Id" class="btn btn-primary bi bi-pen"> <span class="ms-1"></span> </a>
+                                <a asp-controller="Home" asp-action="Delete" asp-route-id="@scheduledAppointment.Id" type="button" class="btn btn-danger bi bi-trash">
+                                    <span class="ms-1"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            }
+        </div>
+
+           
+
+    </div>
+
+</div>

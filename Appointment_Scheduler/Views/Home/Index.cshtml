@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Appointment>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div id="splash">
+    <img id="splashImg" src="~/Images/Main+banner.png" />
+    <div id="overImg1">Facing a health issue ? </div>
+    <div id="overImg2">Don't let your body suffer. Consult our doctors today!</div>
+    <div id="overImg3"> <a asp-action="BookAppointment" asp-controller="Home" class="btn btn-primary">Book a appointment</a></div>
+</div>
+<div class="container">
+  @*   <div class="row">
+        <div class="col-md-4">
+            <div class="card m-3">
+                <div class="card-header">Book Appointment</div>
+                <div class="card-body">Book your session with our doctor</div>
+                <div class="card-footer">
+                    <a asp-action="BookAppointment" asp-controller="Home" class="btn btn-primary">Book Appointment</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card m-3">
+                <div class="card-header">Reschedule Appointment</div>
+                <div class="card-body">Book your session with our doctor</div>
+                <div class="card-footer">
+                    <a class="btn btn-primary">Reshedule Appointment</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card m-3">
+                <div class="card-header">Cancel Appointment</div>
+                <div class="card-body">Book your session with our doctor</div>
+                <div class="card-footer">
+                    <a class="btn btn-danger">Cancel Appointment</a>
+                </div>
+            </div>
+        </div>
+    </div> *@
+   
+   
+
+    <div class="mt-2">
+        <h3 class="mt-5">Booking History</h3>
+       <table class="table table-bordered">
+           <thead class="table-dark">
+               <tr>
+                   <td>Requested Service</td>
+                   <td>Date</td>
+                   <td>Start Time</td>
+                   <td>End Time</td>
+               </tr>
+           </thead>
+            <tbody class="tablecolor">
+                @foreach(var appointment in Model.Reverse().Take(10))
+                {
+                    <tr>
+                        <td>@appointment.Service </td>
+                        <td>@appointment.StartTime.ToString("dd/mm/yyyy")</td>
+                        <td>@appointment.StartTime.ToShortTimeString()</td>
+                        <td>@appointment.EndTime.ToShortTimeString()</td>
+                    </tr>
+                }
+            </tbody>
+       </table>
+    </div>
+</div>

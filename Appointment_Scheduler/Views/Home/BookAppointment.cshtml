@@ -1,0 +1,125 @@
+﻿@model BookAppointmentViewModel
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<style>
+html, body {
+ /*  overflow: hidden; */ /* don't do scrollbars */
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#calendar-container {
+  grid-template:fit-content(50%);
+}
+
+
+</style>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar')
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: '',
+                center: 'title',
+                right: 'prev,next today'
+            },
+
+            selectable: true,
+
+            views: {
+                timeGridDay: {
+                    slotMinTime: '09:00:00',
+                    slotMaxTime: '18:00:00'
+                }
+            },
+
+            dateClick:function(info){
+                if (calendar.view.type == "dayGridMonth") {
+                   // alert("Book for " + info.dateStr);
+                    this.changeView("timeGridDay", info.dateStr);
+                }
+            },
+
+            select:function(info){
+
+                if (calendar.view.type == "timeGridDay") {
+                   
+                    var startDate = new Date(info.startStr);
+                    var endDate = new Date(info.endStr);
+
+                    var formatedStartDate = startDate.toISOString().slice(0, 19);
+                    var formatedEndDate = endDate.toISOString().slice(0, 19);
+
+                    $('#startTime').val(formatedStartDate);
+                    $('#endTime').val(formatedEndDate);
+
+                    // Show the modal
+                    $('#timeSlotModal').modal('show');
+                }
+            }
+
+        })
+        calendar.render()
+
+        $('#timeSlotForm').submit(function (event) {
+            event.preventDefault();
+
+            var startTime = $('#startTime').val();
+            var endTime = $('#endTime').val();
+           
+            // You can now send the data to your server or handle it as needed
+            console.log('Start Time:', startTime);
+            console.log('End Time:', endTime);
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/TimeSlot",
+                data: { startTime: startTime, endTime: endTime },
+                success: function (response) {
+                    // Redirect to the desired view
+                    window.location.href = response.url;
+                },
+                error: function () {
+                    alert('An error occurred while submitting the form.');
+                }
+            });
+        });
+      
+       
+    })
+
+</script>
+
+<div class="modal fade" id="timeSlotModal" tabindex="-1" role="dialog" aria-labelledby="timeSlotModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="timeSlotModalLabel">Select Time Slot</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="timeSlotForm" enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label asp-for="@Model.ST" >Start Time</label>
+                        <input asp-for="@Model.ST" type="text" class="form-control" id="startTime" name="startTime"  />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ET"  >End Time</label>
+                        <input asp-for="@Model.ET" type="text" class="form-control" id="endTime" name="endTime"  />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='calendar-container'"><div id='calendar'></div></div>
+
+
+
+

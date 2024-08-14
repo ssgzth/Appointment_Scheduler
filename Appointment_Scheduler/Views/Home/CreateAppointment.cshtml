@@ -1,0 +1,40 @@
+﻿@model Appointment
+@{
+    ViewBag.PageTitle = "Appointment Booking";
+}
+
+<div class="container">
+
+    <form enctype="multipart/form-data" method="post">
+        
+
+        <div>
+            <label asp-for="Service">Select Service</label>
+            <select asp-for="Service" asp-items="Html.GetEnumSelectList<MServices>()"> </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartTime" class="control-label">Start Time</label>
+            <input asp-for="StartTime" class="form-control" type="datetime-local" />
+            <span asp-validation-for="StartTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndTime" class="control-label">End Time</label>
+            <input asp-for="EndTime" class="form-control" type="datetime-local" />
+            <span asp-validation-for="EndTime" class="text-danger"></span>
+        </div>
+
+        @* <h1>@TempData["hello"] j @ViewBag.endTime</h1> *@
+
+
+       
+
+        <div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+   
+   
+   </form>
+
+</div>
