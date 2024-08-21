@@ -1,4 +1,5 @@
 ﻿using Appointment_Scheduler.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace Appointment_Scheduler.Controllers
         }
         [HttpGet]
         [Route("Account/Register")]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -25,6 +27,7 @@ namespace Appointment_Scheduler.Controllers
 
         [HttpPost]
         [Route("Account/Register")]
+        [AllowAnonymous]
         public async Task< IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -51,6 +54,7 @@ namespace Appointment_Scheduler.Controllers
         [HttpGet]
         [Route("Account/Login")]
         [Route("Login")]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -59,6 +63,7 @@ namespace Appointment_Scheduler.Controllers
         [HttpPost]
         [Route("Account/Login")]
         [Route("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult >Login(LoginViewModel model, string? returnUrl)
         {
 

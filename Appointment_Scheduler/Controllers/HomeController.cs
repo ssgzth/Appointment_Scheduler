@@ -1,5 +1,6 @@
 using Appointment_Scheduler.Models;
 using Appointment_Scheduler.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -19,6 +20,7 @@ namespace Appointment_Scheduler.Controllers
         [Route("Index")]
         [Route("Home/Index")]
         [Route("")]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var viewmodel = _appointment.GetAppointments();

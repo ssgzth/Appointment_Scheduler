@@ -1,5 +1,7 @@
 using Appointment_Scheduler.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,14 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(
         
     }
     ).AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddControllers(
+    option =>
+    {
+        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        option.Filters.Add(new AuthorizeFilter(policy));
+    }
+    );
 
 var app = builder.Build();
 
