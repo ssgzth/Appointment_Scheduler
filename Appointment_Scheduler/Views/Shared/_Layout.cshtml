@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+@inject SignInManager<IdentityUser> signInManager;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -67,16 +69,33 @@
             <a asp-controller="Home" asp-action="Index" class="ms-2 " style="text-decoration:none" > <span class="ms-1 text-white">Appointment Scheduler</span> </a>
  
                 <ul class="navbar-nav ms-auto">
+                    @if(!signInManager.IsSignedIn(User)){
                     <li class="nav-item ">
-                    <a asp-action="Register" asp-controller="Account" class="nav-link "> <span class="ms-1 d-none d-sm-inline text-white">Register</span> </a>
+                        <a asp-action="Register" asp-controller="Account" class="nav-link "> <span class="ms-1 d-none d-sm-inline text-white">Register</span> </a>
                     </li>
 
                     <li class="nav-item">
-                    <a asp-action="Login" asp-controller="Account" class="nav-link "> <span class="mx-3 d-none d-sm-inline text-white">Login</span> </a>
+                        <a asp-action="Login" asp-controller="Account" class="nav-link "> <span class="mx-3 d-none d-sm-inline text-white">Login</span> </a>
                     </li>
-                </ul>
+                    }
 
-
+                                
+                @if (signInManager.IsSignedIn(User))
+                {
+                    
+                    <li class="nav-item">
+                        <form method="post">
+                        <p>
+                            <button asp-action="Logout" asp-controller="Account" class="ms-1 btn btn-primary ">Logout</button>
+                            <span class="mx-2 text-light">@User.Identity.Name</span>
+                        </p>
+                        </form>
+                    </li>
+                   
+                    
+                   
+                }
+             </ul>
         </nav>
     </div>
 

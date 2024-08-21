@@ -16,6 +16,8 @@ namespace Appointment_Scheduler.Controllers
             _appointment = appointment;
         }
 
+        [Route("Index")]
+        [Route("Home/Index")]
         [Route("")]
         public IActionResult Index()
         {
@@ -34,7 +36,7 @@ namespace Appointment_Scheduler.Controllers
 
         [HttpPost]
         [Route("Home/TimeSlot")]
-        public IActionResult TimeSlot(DateTime startTime, DateTime endTime)
+        public IActionResult TimeSlot(DateTime? startTime, DateTime? endTime)
         {
             TempData["start"] = startTime;
             TempData["end"] = endTime;
@@ -61,7 +63,7 @@ namespace Appointment_Scheduler.Controllers
                 Service = MServices.Vaccinations,
                 Status = Status.Scheduled
             };
-
+           
             ViewBag.endTime = "now";
             return View(model);
         }
@@ -77,6 +79,7 @@ namespace Appointment_Scheduler.Controllers
                 _appointment.Add(model);
                 return RedirectToAction("Index");
             }
+
             return View();
         }
 
